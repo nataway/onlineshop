@@ -1,0 +1,12 @@
+{% extends "shop/base.html" %} {% load crispy_forms_tags %}
+
+<h2>Đăng ký</h2>
+
+{% block title %}Đăng ký{% endblock %} {%block content %}
+
+<form method="post">
+  {% csrf_token %} {{ form|crispy }}
+
+  <button type="submit">Đăng ký</button>
+</form>
+{% endblock %}

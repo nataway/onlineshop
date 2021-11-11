@@ -1,0 +1,157 @@
+ {% extends "shop/base.html" %}
+ {% load crispy_forms_tags %}
+
+ <h2>Đặt hàng</h2>
+ {% block title %}
+ {% if category %}{{ category.name }}{% else %}Đặt hàng{% endif %}
+ {% endblock %}
+ {%block content %}
+ <div class="row">
+
+
+   <div class="col-md-8">
+     <h4 class="mb-3">Địa chỉ nhận hàng</h4>
+
+     <form name="form" action='{% url "orders:order_save" %}' method='POST' class='needs-validation' novalidate>
+       {% csrf_token %}
+       <div class="row">
+         <div class="col-md-6 mb-3">
+           <label for="lastName">Họ</label>
+           <input type="text" class="form-control" id="lastName" placeholder="" value="{{profile.user.last_name}}" required>
+           <div class="invalid-feedback">
+             Họ không hợp lệ.
+           </div>
+         </div>
+         <div class="col-md-6 mb-3">
+           <label for="firstName">Tên</label>
+           <input type="text" class="form-control" id="firstName" placeholder="" value="{{ profile.user.first_name }}" required>
+           <div class="invalid-feedback">
+             Tên không hợp lệ.
+           </div>
+         </div>
+       </div>
+       <div class="mb-3">
+         <label for="username">Số điện thoại</label>
+         <div class="input-group">
+
+           <input type="text" value="{{ profile.user.phone_number }}" class="form-control" id="username" required>
+           <div class="invalid-feedback" style="width: 100%;">
+             Số điện thoại chưa đúng.
+           </div>
+         </div>
+       </div>
+
+       <div class="mb-3">
+         <label for="email">Email</label>
+         <input type="email" class="form-control" placeholder="Nhập email của bạn" value="{{profile.user.email}}">
+         <div class="invalid-feedback">
+           Vui lòng nhập địa chỉ email hợp lệ để cập nhật thông tin vận chuyển.
+         </div>
+       </div>
+
+       <div class="mb-3">
+         <label for="address">Địa chỉ</label>
+         <input type="text" name="address" class="form-control" placeholder="Nhập địa chỉ" required>
+         <div class="invalid-feedback">
+           Vui lòng nhập địa chỉ vận chuyển của bạn.
+         </div>
+       </div>
+       <div class="mb-3">
+        <label for="zip">zipcode</label>
+        <input type="text" name="zip" class="form-control" placeholder="Nhập zipcode" required>
+        <div class="invalid-feedback">
+          zip
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="state">state</label>
+        <input type="text" name="state" class="form-control" placeholder="Nhập state" required>
+        <div class="invalid-feedback">
+          state
+        </div>
+      </div><div class="mb-3">
+        <label for="country">country</label>
+        <input type="text" name="country" class="form-control" placeholder="Nhập country" required>
+        <div class="invalid-feedback">
+          country
+        </div>
+      </div>
+    </div>
+    <!-- payment -->
+    <div class="mb-3">
+      <div >phuong thuc thanh toan</div>
+      <input type="radio" id="cash" name="payment" value="cash">
+      <label for="cash">cash</label>
+      
+      <input type="radio" id="card" name="payment" value="card">
+      <label for="card">card</label>
+    </div>
+    <!--  -->
+    <div class="col-md-4">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Tóm tắt đơn hàng</span>
+        <span class="badge badge-secondary badge-pill">{{cart.items.count}}</span>
+      </h4>
+      <ul class="list-group mb-3">
+        {% for item in cart.items.all %}
+        {% with product=item.product %}
+ 
+        <li class="list-group-item d-flex justify-content-between lh-condensed">
+          <div>
+            <h6 class="my-0">{{ product.name }}</h6>
+ 
+          </div>
+          <span class="text-muted">{{ product.price }} X {{ item.quantity }} = {{ item.get_cost }}</span>
+        </li>
+ 
+ 
+        {% endwith %}
+        {% endfor %}
+
+        <!-- <li class="list-group-item d-flex justify-content-between">
+          <span>Ship Cost (VNĐ)</span>
+          <strong >{{cart.get_shipcost}}</strong>
+        </li> -->
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Tổng (VNĐ)</span>
+          <strong >{{cart.get_total_cost}}</strong>
+        </li>
+      </ul>
+ 
+    </div>
+  </div>
+
+       <hr class="mb-4">
+       <button class="btn btn-primary btn-lg btn-block" type="submit">Tiếp tục thanh toán</button>
+     </form>
+   </div>
+   <!-- <div class="col-md-4">
+     <h4 class="d-flex justify-content-between align-items-center mb-3">
+       <span class="text-muted">Tóm tắt đơn hàng</span>
+       <span class="badge badge-secondary badge-pill">{{cart.items.count}}</span>
+     </h4>
+     <ul class="list-group mb-3">
+       {% for item in cart.items.all %}
+       {% with product=item.product %}
+
+       <li class="list-group-item d-flex justify-content-between lh-condensed">
+         <div>
+           <h6 class="my-0">{{ product.name }}</h6>
+
+         </div>
+         <span class="text-muted">{{ product.price }} X {{ item.quantity }} = {{ item.get_cost }}</span>
+       </li>
+
+
+       {% endwith %}
+       {% endfor %}
+
+       <li class="list-group-item d-flex justify-content-between">
+         <span>Tổng (VNĐ)</span>
+         <strong>{{cart.get_total_cost}}</strong>
+       </li>
+     </ul>
+
+   </div>
+ </div> -->
+ {% endblock %}

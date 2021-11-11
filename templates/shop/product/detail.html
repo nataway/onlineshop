@@ -1,0 +1,152 @@
+{% extends "shop/base.html" %} {% load static %} {% block title %} {{
+product.name }} {% endblock %} {% block content %}
+<head>
+  <link rel="stylesheet" type="./Rating.js" href="style.js" />
+  <link
+    href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Include the JavaScript SDK on your page once, ideally right after the opening body tag. -->
+  <div id="fb-root"></div>
+  <script>
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src =
+        "https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v3.0&appId=1774450775918270&autoLogAppEvents=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+  </script>
+</head>
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card mt-4">
+      <div class="card-body">
+        <img src="{% if product.image %}{{ product.image.url }}{% else %}{%
+        static "img/no_image.png" %}{% endif %}" class="card-img-top img-fluid">
+      </div>
+      <!-- /.card -->
+    </div>
+    &nbsp &nbsp
+  </div>
+
+  <div class="col-lg-4">
+    <!-- <div class="card mt-4">
+      <div class="card-body">
+        <h2 class="my-4">
+          <a
+            style="text-decoration: none"
+            href="{{ product.category.get_absolute_url }}"
+            >Xem thêm {{ product.category }}</a
+          >
+        </h2>
+      </div>
+    </div> -->
+    <div class="card mt-4">
+      <div class="card-body">
+        <h3 class="card-title">{{ product.name }}</h3>
+        <h4>{{ product.price }}<sup>đ</sup></h4>
+        <p class="card-text">{{ product.description|linebreaks }}</p>
+
+        <div class="card-footer text-center">
+          <small class="text-muted form-group">
+            <a
+              href="{% url  'cart:cart_add' product.id %}"
+              class="btn btn-primary"
+              >Thêm vào giỏ hàng</a
+            >
+
+            <!-- <a
+              href="{% url  'wishlist:wishlist_add' product.id %}"
+              class="btn btn-default"
+              >Add to Wishlist</a
+              <box-icon name='mail-send'></box-icon>
+            > -->
+          </small>
+          <!-- <small class="text-muted form-group">
+            <a
+              href="{% url 'shop:send_mail' product.id %}"
+              class="fa fa-rss btn btn-primary"
+              >send mail</a
+            >
+          </small> -->
+        </div>
+        <!-- https://www.codemeright.com/facebook-share-button.html-->
+        <div
+          class="fb-share-button"
+          
+          data-href="http://127.0.0.1:8000/{{product.get_absolute_url}}"
+          data-layout="button"
+          data-size="small"
+          data-mobile-iframe="true"
+        >
+          <a
+            target="_blank"
+            href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.codemeright.com%2Ffacebook-share-button.html&amp;src=sdkpreparse"
+            class="fb-xfbml-parse-ignore"
+            >Share</a
+          >
+        </div>
+        <div class="card-footer text-center">
+          <small class="text-muted form-group">
+            <p class="card-text">so luong trong kho :{{ product.stock }}</p>
+          </small>
+        </div>
+      </div>
+      <!--<div class="list-group">
+                      <a href="#" class="list-group-item active">Category 1</a>
+                      <a href="#" class="list-group-item">Category 2</a>
+                      <a href="#" class="list-group-item">Category 3</a>
+                    </div> #}
+                    </div>
+                        <!-- /.col-lg-3 -->
+    </div>
+    <div class="card-footer" style="margin-top: 20px">
+      <form action="{% url 'payment:addreview' product.id %}" method="POST">
+        {% csrf_token %}
+        <div class="input-group">
+          <div>
+            <label for="rating">rating:</label>
+            <select id="rating" name="rating">
+              <option value="">Select...</option>
+              <option value="Poor">1 - Poor</option>
+              <option value="Fair">2 - Fair</option>
+              <option value="Good">3 - Good</option>
+              <option value="Very Good">4 - Very Good</option>
+              <option value="Excellent">5 - Excellent</option>
+            </select>
+          </div>
+          <div>
+            <label for="comment">comment:</label>
+            <textarea id="comment" name="comment" rows="4" cols="45">
+            </textarea>
+          </div>
+        </div>
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit">gui</button>
+        </div>
+      </form>
+    </div>
+
+    <div>
+      {% for review in reviews %}
+      <div class="card-footer" style="margin-top: 10px">
+        <p>{{review.user.first_name}} rate: {{review.rating}}</p>
+        <p style="margin-top: 10px; font-size: 11px">{{review.createdAt}}</p>
+        <p style="background: rgba(0, 0, 0, 0.1); padding: 5px">
+          {{review.comment}}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endblock %}
+</div>

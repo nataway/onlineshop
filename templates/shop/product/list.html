@@ -1,0 +1,221 @@
+
+{% extends "shop/base.html" %}
+{% load static %}
+
+
+
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}Danh sách sản phẩm{% endif %}
+{% endblock %}
+
+{% block content %}
+<head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+  />
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../css/style.css" />
+  <link rel="stylesheet" type="text/css" href="../css/responsive.css" />
+
+  <!-- ChatBot -->
+  <link rel="stylesheet" type="text/css" href="../css/jquery.convform.css" />
+  <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.convform.js"></script>
+  <script type="text/javascript" src="../js/custom.js"></script>
+</head>
+<body>
+  
+
+
+
+
+      <div class="row">
+        <div class="col-lg-3">
+          <h3 class="my-4">Danh mục</h3>
+          <div class="list-group">
+            <a href="{% url "shop:product_list" %}" class="list-group-item">Tất cả</a>
+            {% for c in categories %}
+            <a href="{{ c.get_absolute_url }}" class="list-group-item">{{ c.name }}</a>
+            {% endfor %}
+          </div>
+          <h3 class="my-4">Tìm kiếm sản phẩm</h3>   
+            <div class="row">
+                <div class="col-lg-12">
+                <form action="{% url "shop:product_search" %}" method="post">
+                  {% csrf_token %}
+                <div class="input-group">
+                  <input type="text" name="query" class="form-control" placeholder="Nhập tên sản phẩm...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Tìm</button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              </div>
+            </div>
+        </div>
+      
+        <div class="col-lg-9">
+            <div class="row">
+            <h3></h3>
+            <h3 class="my-4">{% if category %}{{ category.name }}{% else %}Danh sách sản phẩm{% endif %}</h3>
+            </div>
+        <div class="row">
+          
+            {% for product in products %}
+            <div class="col-lg-4 col-md-6 mb-4">
+            
+              <div class="card h-100">
+                <div class="thumbnail">
+                <a href="{{ product.get_absolute_url }}">
+                    <img class="card-img-top" src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+                </a>
+              </div>
+                <div class="card-body">
+                  <h4 class="card-title">
+                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>
+                  </h4>
+                  <h5>{{ product.price }}<sup>đ</sup></h5>
+                  
+                </div>
+                <div class="card-footer text-center">
+                  <small class="text-muted">
+                      
+                      <a href="{% url  'cart:cart_add' product.id %}"
+                      
+                      class="btn btn-primary ">Thêm vào giỏ hàng</a>
+                      
+                      <!-- <a href="{% url  'wishlist:wishlist_add' product.id %}" class="btn btn-default">Thêm vào danh sách yêu thích</a> -->
+                      
+                      
+                  </small>
+                </div>
+                
+              </div>
+            </div>
+            {% endfor %}    
+        
+
+            
+          </div>
+
+        </div>
+   
+
+      </div>
+
+    
+      <div class="row">
+            <div class="col-md-12 text-center">
+                
+                    <div class="pag_area">
+                        <ul class="pagination">
+                            {% if products.has_previous %}
+                                <li><a href="?page={{ products.previous_page_number }}">«</a></li>
+                            {% else %}
+                                <li class="disabled"><span>«</span></li>
+                            {% endif %}
+                            {% for i in products.paginator.page_range %}
+                                {% if products.number == i %}
+                                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                {% else %}
+                                    <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if products.has_next %}
+                                <li><a href="?page={{ products.next_page_number }}">»</a></li>
+                            {% else %}
+                                <li class="disabled"><span>»</span></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                
+            </div>
+        </div>
+
+      <!-- /.row -->
+
+
+
+      <div class="chat_icon">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+      </div>
+    
+      <div class="chat_box">
+        <div class="my-conv-form-wrapper">
+          <form action="" method="GET" class="hidden">
+            <select data-conv-question="Hello! How can I help you" name="category">
+              <option value="WebDevelopment">Website Development ?</option>
+              <option value="DigitalMarketing">Digital Marketing ?</option>
+            </select>
+    
+            <div data-conv-fork="category">
+              <div data-conv-case="WebDevelopment">
+                <input
+                  type="text"
+                  name="domainName"
+                  data-conv-question="Please, tell me your domain name"
+                />
+              </div>
+              <div
+                data-conv-case="DigitalMarketing"
+                data-conv-fork="first-question2"
+              >
+                <input
+                  type="text"
+                  name="companyName"
+                  data-conv-question="Please, enter your company name"
+                />
+              </div>
+            </div>
+    
+            <input
+              type="text"
+              name="name"
+              data-conv-question="Please, Enter your name"
+            />
+    
+            <input
+              type="text"
+              data-conv-question="Hi {name}, <br> It's a pleasure to meet you."
+              data-no-answer="true"
+            />
+    
+            <input
+              data-conv-question="Enter your e-mail"
+              data-pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+              type="email"
+              name="email"
+              required
+              placeholder="What's your e-mail?"
+            />
+    
+            <select data-conv-question="Please Conform">
+              <option value="Yes">Conform</option>
+            </select>
+          </form>
+        </div>
+      </div>
+
+
+      <script type="text/javascript">
+        portfolioList = document.querySelectorAll(".portfolio-box");
+        portfolioList.forEach(function (portfolioPic) {
+          portfolioPic.addEventListener("click", function () {
+            bg = this.style.backgroundImage;
+            document.getElementById("port_pop_pic_bg").classList.add("active");
+            document.getElementById("port_pop_pic").style.backgroundImage = bg;
+            document.getElementById("port_pop_pic").classList.add("active");
+          });
+        });
+        document
+          .getElementById("port_pop_pic_bg")
+          .addEventListener("click", function () {
+            document.getElementById("port_pop_pic_bg").classList.remove("active");
+            document.getElementById("port_pop_pic").classList.remove("active");
+          });
+      </script>
+</body>
+
+{% endblock %}

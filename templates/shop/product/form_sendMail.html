@@ -1,0 +1,48 @@
+<style>
+  input[type=submit]{
+    width:100px;
+    height:30px;
+    outline:none;
+    border:none;
+    background:white;
+    border:1px solid #2196f3;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  input[type=submit]:hover, input[type=submit]:active{
+    background:#2196f3;
+    color:white;
+  }
+  #id_tittle, #id_email_receive, #id_body{
+    outline:none;
+    background:inherit;
+    border:none;
+    border:1px solid black;
+    height:25px;
+    width:200px;
+    border-radius:10px;
+    font-size:14px;
+  }
+  #id_body{
+    height:60px;
+  }
+  h3{
+    text_align:center;
+  }
+  .mail{
+    height:300px;
+    width:300px;
+    border:1px solid #2196f3;
+    border-radius:20px;
+    padding:10px;
+    margin:auto;
+  }
+</style>
+<div class="mail">
+      <h3>Chia sẻ mặt hàng qua mail</h3>
+      <form action="#" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Đăng"/>
+      </form>
+</div>

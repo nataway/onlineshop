@@ -1,0 +1,293 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Shop bán hàng online{% endblock %}</title>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="{%  static 'img/save.ico' %}"
+    />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+      rel="stylesheet"
+    />
+
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery/custom.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <!-- Optional theme -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+      crossorigin="anonymous"
+    />
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/shop-homepage.css' %}" rel="stylesheet" />
+
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/responsive.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/jquery.convform.css" />
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.convform.js"></script>
+    <script type="text/javascript" src="js/custom.js"></script> -->
+  </head>
+  <body>
+    <!-- ChatBot -->
+    <!-- <div class="chat_icon">
+      <i class="fa fa-comments" aria-hidden="true"></i>
+    </div>
+
+    <div class="chat_box">
+      <div class="my-conv-form-wrapper">
+        <form action="" method="GET" class="hidden">
+          <select
+            data-conv-question="Hello! How can I help you"
+            name="category"
+          >
+            <option value="WebDevelopment">Website Development ?</option>
+            <option value="DigitalMarketing">Digital Marketing ?</option>
+          </select>
+
+          <div data-conv-fork="category">
+            <div data-conv-case="WebDevelopment">
+              <input
+                type="text"
+                name="domainName"
+                data-conv-question="Please, tell me your domain name"
+              />
+            </div>
+            <div
+              data-conv-case="DigitalMarketing"
+              data-conv-fork="first-question2"
+            >
+              <input
+                type="text"
+                name="companyName"
+                data-conv-question="Please, enter your company name"
+              />
+            </div>
+          </div>
+
+          <input
+            type="text"
+            name="name"
+            data-conv-question="Please, Enter your name"
+          />
+
+          <input
+            type="text"
+            data-conv-question="Hi {name}, <br> It's a pleasure to meet you."
+            data-no-answer="true"
+          />
+
+          <input
+            data-conv-question="Enter your e-mail"
+            data-pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"
+            type="email"
+            name="email"
+            required
+            placeholder="What's your e-mail?"
+          />
+
+          <select data-conv-question="Please Conform">
+            <option value="Yes">Conform</option>
+          </select>
+        </form>
+      </div>
+    </div> -->
+    <!-- ChatBot end -->
+
+    <!-- Navigation -->
+
+    <nav class="navbar navbar-expand-lg navbar-default navbar-fixed-top">
+      <div class="container">
+        <a class="logo-main" href="/">Nhóm 13</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav navbar-right">
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="#"
+                >Trang chủ
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="">
+              <a class="nav-link" href="#">Giới thiệu</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#">Liên hệ</a>
+            </li> -->
+
+            {% if user.is_authenticated %}
+
+            <li class="dropdown">
+              <a
+                href="#"
+                class="dropdown-toggle nav-link"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ><span
+                  class="glyphicon glyphicon-user"
+                  aria-hidden="true"
+                ></span>
+                <span>{{ user.username }}</span></a
+              >
+
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="{% url 'accounts:detail_profile' %}"
+                    ><span
+                      class="glyphicon glyphicon-cog"
+                      aria-hidden="true"
+                    ></span>
+                    Cài đặt</a
+                  >
+                </li>
+                <li>
+                  <a href="{% url 'cart:cart_detail' %}"
+                    ><span
+                      class="glyphicon glyphicon-shopping-cart"
+                      aria-hidden="true"
+                    ></span>
+                    Giỏ hàng <span class="badge"></span
+                  ></a>
+                </li>
+
+                <li>
+                  <a href="{% url 'orders:my_order' %}"
+                    ><span
+                      class="glyphicon glyphicon-shopping-cart"
+                      aria-hidden="true"
+                    ></span>
+                    Dơn hàng <span class="badge"></span
+                  ></a>
+                </li>
+
+                <!-- <li>
+                  <a href="{% url 'wishlist:wishlist_detail' %}"
+                    ><span
+                      class="glyphicon glyphicon-heart"
+                      aria-hidden="true"
+                    ></span>
+                    Yêu thích</a
+                  >
+                </li> -->
+
+                <li role="separator" class="divider"></li>
+
+                <li>
+                  <a href="{% url 'accounts:logout' %}?next=/"
+                    ><span
+                      class="glyphicon glyphicon-log-out"
+                      aria-hidden="true"
+                    ></span>
+                    Đăng xuất</a
+                  >
+                </li>
+              </ul>
+            </li>
+
+            {% else %}
+            <li class="nav-item">
+              <a href="{% url 'accounts:signup' %}" class="nav-link">
+                <span aria-hidden="true"></span>&nbsp; Đăng ký
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'accounts:login' %}" class="nav-link">
+                <span
+                  class="glyphicon glyphicon-log-in"
+                  aria-hidden="true"
+                ></span
+                >&nbsp; Đăng nhập
+              </a>
+            </li>
+
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+    &nbsp
+    <!-- Page Content -->
+    <div class="container">
+      <div id="content">{% block content %} {% endblock %}</div>
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    &nbsp
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Nhóm 13</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <script type="text/javascript">
+      portfolioList = document.querySelectorAll(".portfolio-box");
+      portfolioList.forEach(function (portfolioPic) {
+        portfolioPic.addEventListener("click", function () {
+          bg = this.style.backgroundImage;
+          document.getElementById("port_pop_pic_bg").classList.add("active");
+          document.getElementById("port_pop_pic").style.backgroundImage = bg;
+          document.getElementById("port_pop_pic").classList.add("active");
+        });
+      });
+      document
+        .getElementById("port_pop_pic_bg")
+        .addEventListener("click", function () {
+          document.getElementById("port_pop_pic_bg").classList.remove("active");
+          document.getElementById("port_pop_pic").classList.remove("active");
+        });
+    </script>
+  </body>
+</html>

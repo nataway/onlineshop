@@ -1,0 +1,85 @@
+{% extends "shop/base.html" %}
+  {% load static %}
+{% block title %}
+  don hang
+{% endblock %}
+{% block content %}
+
+<link
+  href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+  rel="stylesheet"
+/>
+
+<table id="cart" class="table table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>ID_Order</th>
+      <th>USER</th>
+      <th>DATE</th>
+      <!-- <th>shipCost</th> -->
+      <th>Total</th>
+      <!-- <th>PAID</th> -->
+      <th>DELIVERED</th>
+      <th>Deitail</th>
+  </tr>
+  </thead>
+  
+
+  <tbody>
+    {% for order in orders %}
+    <tr>
+      <th>{{ order.id}}</th>
+      <th>{{ order.user.first_name }}</th>
+      
+      <th>{{ order.created}}</th>
+      <!-- <th>{{ order.shipCost}}</th> -->
+      <th>{{order.total}}</th>
+      <!-- <th>{{payment.name}}</th> -->
+      
+      <!-- {% if order.isPaid == 0 %}
+      <th style="color:Tomato;">chu nhan duoc tien</th>
+      {% else %}
+      <th style="color: blue;">da nhan duoc tien</th>
+      {% endif %} -->
+
+      {% if order.isDelivered == 0 %}
+      <th style="color:Tomato;"">chua giao hang</th>
+      {% else %}
+        {% if order.isPaid == 1 %}
+        <th style="color: rgb(255, 136, 0);">hoan thanh</th>
+        {% else %}
+        <th style="color:blue" >dang giao</th>
+        {% endif %} 
+      {% endif %}      
+      <th><a href="{% url 'orders:order_detail' order.id %}">detail</a></th>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+
+  <!-- <tfoot>
+    <tr class="visible-xs">
+      <td class="text-center"><strong>cart.</strong></td>
+    </tr>
+    <tr>
+      <td>
+        <a href="{% url 'shop:product_list' %}" class="btn btn-warning"
+          ><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a
+        >
+      </td>
+      <td colspan="2" class="hidden-xs"></td>
+      <td class="hidden-xs text-center">
+        <strong>Tổng {{cart.get_total_cost}}<sup>đ</sup></strong>
+      </td>
+      <td>
+        <a
+          href="{% url 'orders:order_create' %}"
+          class="btn btn-success btn-block"
+          >Thanh toán <i class="fa fa-angle-right"></i
+        ></a>
+      </td>
+    </tr>
+  </tfoot> -->
+</table>
+
+&nbsp {% endblock %}

@@ -1,0 +1,60 @@
+{% extends "shop/base.html" %}
+  {% load static %}
+{% block title %}
+  don hang
+{% endblock %}
+{% block content %}
+
+<link
+  href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"
+  rel="stylesheet"
+/>
+
+<table id="cart" class="table table-hover table-condensed">
+  <thead>
+    <div> order_id :
+      {{order.id}}
+    </div>
+    <tr>
+      <th>ID_PRODUCT</th>
+      <th>IMG</th>
+      <th>NAME</th>
+      <th>DATE</th>
+      <th>PRICE</th>
+      <th>QLY</th>
+      <th>TOTAL</th>
+      <!-- <th>Payment</th>
+      <th>PAID</th>
+      <th>DELIVERED</th>
+      <th>Deitail</th> -->
+  </tr>
+  </thead>
+
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <th>{{ item.id}}</th>
+      <th>
+        <a href="{{ item.product.get_absolute_url }}">
+          <img class="card-img-top" style="width:50px; height:50px"
+           src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{% static "img/no_image.png" %}{% endif %}">
+      </a>
+      </th>
+      <th>{{ item.product.name }}</th>  
+      <th>{{ order.created}}</th>
+      <th>{{item.price}}</th>
+      <th>{{item.quantity}}</th>
+      <th>{{item.get_cost }}</th>
+      </td>
+    </tr>
+    {% endfor %}
+    <div> payment: {{payment.name}}</div>
+    <div> address: {{shippingaddress.address}}</div>
+    <div> postal_code: {{shippingaddress.postal_code}}</div>
+    <div> country: {{shippingaddress.country}}</div>
+    <div> state: {{shippingaddress.state}}</div>
+  </tbody>
+
+</table>
+
+&nbsp {% endblock %}
